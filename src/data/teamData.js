@@ -59,8 +59,8 @@ export const teamMembers = [
     section: 'E',
     photo: swayamImg,
     linkedin: 'https://www.linkedin.com/in/swayam-dwivedi-245b45391/',
-    email: 7307391343,
-    whatsapp: null,
+    email: null,
+    whatsapp: '7307391343',
     instagram: null,
   },
   {
