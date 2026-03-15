@@ -74,7 +74,7 @@ export const teamMembers = [
     linkedin: 'https://www.linkedin.com/in/aryan-singh-a481933b3/',
     email: 'aryan.singh2025@glbajajgroup.org',
     whatsapp: '8423067765',
-    instagram: null,
+    instagram: 'https://www.instagram.com/beparwah_engineer/',
   },
   {
     id: 11,
