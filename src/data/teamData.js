@@ -9,6 +9,8 @@ import swayamImg from '../assets/images/team/swayam.png';
 import aryanImg from '../assets/images/team/aryan.png';
 import vartikaImg from '../assets/images/team/vartika.png';
 import placeholderImg from '../assets/images/team/placeholder.png';
+import ankitImg from '../assets/images/team/ankit.png';
+import surjeetImg from '../assets/images/team/surjeet.png';
 
 export const teamMembers = [
   {
@@ -59,7 +61,7 @@ export const teamMembers = [
     section: 'E',
     photo: swayamImg,
     linkedin: 'https://www.linkedin.com/in/swayam-dwivedi-245b45391/',
-    email: null,
+    email: 'swayamdwivedi88@gmail.com',
     whatsapp: '7307391343',
     instagram: null,
   },
@@ -122,7 +124,7 @@ export const teamMembers = [
     year: '1st Year',
     branch: 'CS',
     section: 'F',
-    photo: placeholderImg,
+    photo: ankitImg,
     linkedin: 'https://www.linkedin.com/in/ankit-singh-1b5b50395/',
     email: null,
     whatsapp: '9555420284',
@@ -148,9 +150,9 @@ export const teamMembers = [
     year: '1st Year',
     branch: 'CS',
     section: 'J',
-    photo: placeholderImg,
+    photo: surjeetImg,
     linkedin: 'https://www.linkedin.com/in/suryjeet-singh-2917633b3/',
-    email: null,
+    email: 'suryjeet.singh2025@glbajajgroup.org',
     whatsapp: null,
     instagram: null,
   },
