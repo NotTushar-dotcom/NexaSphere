@@ -93,7 +93,7 @@ export default function App() {
 function HomePage({ nav }) {
   return (
     <div>
-      <!-- Hero -->
+      {/* Hero */}
       <div style={{ position: "relative", minHeight: "92vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${HERO_BG})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.15 }} />
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, #06b6d411 0%, #04060f 70%)" }} />
