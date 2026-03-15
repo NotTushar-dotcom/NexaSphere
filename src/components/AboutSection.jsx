@@ -25,7 +25,7 @@ export default function AboutSection() {
         <div className="about-content">
           <p className="about-text reveal" style={{ transitionDelay: '0.15s' }}>
             <strong style={{ color: 'var(--cyan)' }}>NexaSphere</strong> is a student-driven tech
-            ecosystem at <strong style={{ color: 'var(--indigo)' }}>GL Bajaj Group of Institutions, Mathura</strong>.
+            ecosystem.
             Founded with a mission to create a thriving community of passionate engineers and innovators,
             we bridge the gap between academic learning and real-world technology.
           </p>
