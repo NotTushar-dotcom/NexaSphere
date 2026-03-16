@@ -14,6 +14,7 @@ import surjeetImg from '../assets/images/team/surjeet.png';
 import asthaImg from '../assets/images/team/astha.png';
 import aryaImg from '../assets/images/team/arya.png';
 import roshniImg from '../assets/images/team/roshni.png';
+import vikasImg from '../assets/images/team/vikas.png';
 
 export const teamMembers = [
   {
@@ -140,7 +141,7 @@ export const teamMembers = [
     year: '1st Year',
     branch: 'CSE',
     section: 'E',
-    photo: placeholderImg,
+    photo: vikasImg,
     linkedin: 'https://www.linkedin.com/in/vikas-kumar-sharma-42137412b/',
     email: 'vks184953@gmail.com',
     whatsapp: '7983419487',
