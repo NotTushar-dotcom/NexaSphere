@@ -11,6 +11,9 @@ import vartikaImg from '../assets/images/team/vartika.png';
 import placeholderImg from '../assets/images/team/placeholder.png';
 import ankitImg from '../assets/images/team/ankit.png';
 import surjeetImg from '../assets/images/team/surjeet.png';
+import asthaImg from '../assets/images/team/astha.png';
+import aryaImg from '../assets/images/team/arya.png';
+import roshniImg from '../assets/images/team/roshni.png';
 
 export const teamMembers = [
   {
@@ -98,9 +101,9 @@ export const teamMembers = [
     year: '1st Year',
     branch: 'CS (AI & ML)',
     section: 'F',
-    photo: placeholderImg,
-    linkedin: null,
-    email: null,
+    photo: aryaImg,
+    linkedin: 'https://www.linkedin.com/in/arya-kaushik-1705a23b7/',
+    email: 'kaushikarya87@gmail.com',
     whatsapp: null,
     instagram: null,
   },
@@ -111,9 +114,9 @@ export const teamMembers = [
     year: '1st Year',
     branch: 'CS (AI & ML)',
     section: 'G',
-    photo: placeholderImg,
+    photo: asthaImg,
     linkedin: 'https://www.linkedin.com/in/astha-shukla-18528836a/',
-    email: null,
+    email: 'shuklaaasthashukla25@gmail.com',
     whatsapp: null,
     instagram: null,
   },
@@ -163,9 +166,9 @@ export const teamMembers = [
     year: '2nd Year',
     branch: 'CST',
     section: 'E',
-    photo: placeholderImg,
+    photo: roshniImg,
     linkedin: 'https://www.linkedin.com/in/guptaroshni5/',
-    email: null,
+    email: 'guptaroshnirg05@gmail.com',
     whatsapp: null,
     instagram: null,
   },
