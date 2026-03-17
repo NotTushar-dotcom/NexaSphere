@@ -34,11 +34,23 @@ function SplitTitle({ text }) {
   return (
     <span style={{ display:'inline-block', perspective:'600px' }}>
       {text.split('').map((ch, i) => (
-        <span key={i} style={{
-          display: 'inline-block',
-          animation: `letterDrop 0.6s cubic-bezier(0.22,1,0.36,1) both`,
-          animationDelay: `${0.05 * i}s`,
-        }}>
+        <span
+          key={i}
+          style={{
+            display: 'inline-block',
+            background: 'linear-gradient(270deg, #00d4ff, #6366f1, #a855f7, #ec4899, #00d4ff)',
+            backgroundSize: '400% 400%',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            animationName: 'letterDrop, gradientShift',
+            animationDuration: `0.6s, 4s`,
+            animationTimingFunction: 'cubic-bezier(0.22,1,0.36,1), ease',
+            animationFillMode: 'both, none',
+            animationDelay: `${0.05 * i}s, 0s`,
+            animationIterationCount: '1, infinite',
+          }}
+        >
           {ch}
         </span>
       ))}
@@ -239,7 +251,7 @@ export default function HeroSection({ onTabChange }) {
           }} />
         </div>
 
-        {/* Glitching title */}
+        {/* Animated letter-drop title */}
         <h1 className="hero-title" style={{
           fontFamily:'Orbitron,monospace',
           fontSize:'clamp(2.5rem,8vw,5.5rem)',
@@ -247,12 +259,9 @@ export default function HeroSection({ onTabChange }) {
           letterSpacing:'0.12em',
           marginBottom:'8px',
           lineHeight:1,
+          filter:'drop-shadow(0 0 30px rgba(0,212,255,0.4))',
         }}>
-          <span className="animated-gradient-text" style={{
-            filter:'drop-shadow(0 0 30px rgba(0,212,255,0.4))',
-          }}>
-            <SplitTitle text={TITLE} />
-          </span>
+          <SplitTitle text={TITLE} />
         </h1>
 
         {/* Tagline with typing cursor */}
