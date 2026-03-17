@@ -1,6 +1,4 @@
 // ── NexaSphere Activity Pages Data ──
-// Each activity has its own detail page listing conducted events.
-// Each event links to a full detail page.
 
 export const activityPages = {
   'Hackathon': {
@@ -69,25 +67,63 @@ export const activityPages = {
     description: 'Peer-to-peer knowledge sharing where every member is both a student and a teacher. Deep-dive talks on tech, careers, and the ideas shaping tomorrow.',
     conductedEvents: [
       {
-        id: 'kss-1',
-        name: 'KSS — Knowledge Sharing Session #1',
-        shortName: 'KSS #1',
-        date: 'March 14, 2025',
+        id: 'kss-153',
+        name: 'KSS #153 — Impact of AI',
+        shortName: 'KSS #153',
+        date: 'March 2025',
         status: 'completed',
-        tagline: 'NexaSphere\'s inaugural knowledge exchange',
+        tagline: 'They came. They listened. They left thinking differently.',
+        hashtags: ['#KSS153', '#ImpactOfAI', '#GLBajaj', '#KnowledgeSharingSession', '#Nexasphere', '#StudentLeaders', '#AIForAll', '#AKTU', '#Mathura', '#FindYourSpark'],
         stats: [
-          { label: 'Speakers', value: '4' },
-          { label: 'Attendees', value: '40+' },
-          { label: 'Duration', value: '1 hr' },
-          { label: 'Topics', value: '4' },
+          { label: 'Presenters', value: '3' },
+          { label: 'Video Presentors', value: '2' },
+          { label: 'Volunteers', value: '5' },
+          { label: 'Session', value: '#153' },
         ],
-        overview: `NexaSphere's inaugural Knowledge Sharing Session brought together curious minds for an evening of peer-to-peer learning. Members stepped up as speakers, sharing their expertise on emerging technologies — from AI concepts to web development workflows. The session fostered a culture of open knowledge exchange and set the tone for what NexaSphere stands for: learning together, growing together.`,
+        overview: `Knowledge Sharing Session #153 on the topic "Impact of AI" just wrapped up at GL Bajaj Group of Institutions, Mathura — and what a session it was! 🧠💡\n\nThink about it — today, even deciding whether to have chai ☕ or coffee is being influenced by AI. Recommendation engines, smart assistants, predictive habits... AI has quietly slipped into every corner of our lives. And our presenters made sure we felt every bit of that reality.`,
         topics: [
-          { title: 'Introduction to Artificial Intelligence', speaker: 'Ayush Sharma', duration: '15 min', summary: 'Covered the fundamentals of AI — machine learning, neural networks, and how AI is transforming industries.' },
-          { title: 'Web Development with React', speaker: 'Tanishk Bansal', duration: '15 min', summary: 'Walked through React component architecture, state management, and building interactive UIs.' },
-          { title: 'Open Source Contribution — Getting Started', speaker: 'Swayam Dwivedi', duration: '10 min', summary: 'Explained how to find good first issues, make pull requests, and contribute to real-world projects.' },
-          { title: 'Data Structures You Should Know', speaker: 'Tushar Goswami', duration: '10 min', summary: 'Quick overview of stacks, queues, trees, and graphs with practical coding examples.' },
+          {
+            title: 'Impact of AI on Everyday Life',
+            speaker: 'Ankit Singh',
+            role: 'Presenter',
+            duration: '—',
+            summary: 'Explored how AI silently shapes our daily decisions — from what we watch, eat, and buy, to how recommendation engines and smart assistants predict our habits before we even realise it.',
+          },
+          {
+            title: 'AI in Industry & Career Paths',
+            speaker: 'Astha Shukla',
+            role: 'Presenter',
+            duration: '—',
+            summary: 'Deep-dived into how AI is transforming industries — healthcare, finance, education, and beyond — and what it means for the careers of tomorrow\'s engineers.',
+          },
+          {
+            title: 'The Future of AI — Opportunities & Challenges',
+            speaker: 'Vikas Kumar Sharma',
+            role: 'Presenter',
+            duration: '—',
+            summary: 'Discussed the ethical landscape of AI, its growing capabilities, and the responsibilities that come with building intelligent systems.',
+          },
         ],
+        videoPresenter: [
+          { name: 'Tanishk Bansal', role: 'Video Presentor' },
+          { name: 'Swayam Dwivedi', role: 'Video Presentor' },
+        ],
+        anchor: { name: 'Arya Kaushik', role: 'Anchor' },
+        volunteers: [
+          { name: 'Ayush Sharma' },
+          { name: 'Aryan Singh' },
+          { name: 'Vartika Sharma' },
+          { name: 'Tushar Goswami' },
+          { name: 'Roshni Gupta' },
+        ],
+        acknowledgements: [
+          { name: 'Prof. Neeta Awasthy Ma\'am', title: 'Director', note: 'For your vision, encouragement, and leadership that pushes every student to find their spark.' },
+          { name: 'Prof.(Dr.) V.K. Singh Sir', title: 'HOD', note: 'For your constant guidance and belief in student-led initiatives.' },
+          { name: 'Dr. Shashi Shekhar (PhD) Sir', title: 'HOD', note: 'For your constant guidance and belief in student-led initiatives.' },
+          { name: 'Richa Mishra Ma\'am & Vivek Bhardwaj Sir', title: 'Faculty', note: 'For being the backbone behind every event and always pushing us to do better.' },
+          { name: 'Dr. Wazir Singh Sir', title: 'KSS Coordinator', note: 'For approving and supporting this session. Your trust in us means everything!' },
+        ],
+        closingNote: 'This is just the BEGINNING. Bigger events. Deeper sessions. More ideas. More inspiration. The journey has just started and we\'re only getting warmed up! 🔥',
         photoLink: null,
         videoLink: null,
       },
