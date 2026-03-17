@@ -11,13 +11,13 @@ import EventsSection from './components/EventsSection';
 import AboutSection from './components/AboutSection';
 import TeamSection from './components/TeamSection';
 import Footer from './components/Footer';
+import InsightSessionsPage from './components/InsightSessionsPage';
+import KSSDetailPage from './components/KSSDetailPage';
 
 import nexasphereLogo from './assets/images/logos/nexasphere-logo.png';
 
-// ── Mobile navbar height (2-row) ──
 const MOBILE_NAV_HEIGHT = 88;
 const DESKTOP_NAV_HEIGHT = 64;
-
 const SECTIONS = ['Home', 'Activities', 'Events', 'About', 'Team'];
 
 export default function App() {
@@ -25,9 +25,11 @@ export default function App() {
   const [splashFading, setSplashFading] = useState(false);
   const [activeTab, setActiveTab] = useState('Home');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [subPage, setSubPage] = useState(null);       // 'insight-sessions' | null
+  const [selectedSession, setSelectedSession] = useState(null); // session object | null
   const cursorRef = useRef(null);
 
-  // ── Splash Screen (1.5s) ──
+  // ── Splash Screen ──
   useEffect(() => {
     const t1 = setTimeout(() => setSplashFading(true), 1400);
     const t2 = setTimeout(() => setSplashDone(true), 1900);
@@ -69,8 +71,9 @@ export default function App() {
     return () => window.removeEventListener('mousemove', move);
   }, []);
 
-  // ── Active tab from scroll ──
+  // ── Active tab from scroll (only on main page) ──
   useEffect(() => {
+    if (subPage) return;
     const navH = isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_HEIGHT;
     const onScroll = () => {
       const scrollY = window.scrollY + navH + 32;
@@ -84,7 +87,7 @@ export default function App() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [isMobile]);
+  }, [isMobile, subPage]);
 
   // ── Resize ──
   useEffect(() => {
@@ -93,38 +96,67 @@ export default function App() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // ── Tab navigation (smooth scroll to section) ──
+  // ── Tab navigation ──
   const handleTabChange = (tab) => {
+    // If on a sub-page, go back to main first
+    if (subPage) {
+      setSubPage(null);
+      setSelectedSession(null);
+    }
     setActiveTab(tab);
-    const el = document.getElementById(`section-${tab.toLowerCase()}`);
-    if (!el) return;
-    const navH = isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_HEIGHT;
-    const top = el.offsetTop - navH;
-    window.scrollTo({ top, behavior: 'smooth' });
+    setTimeout(() => {
+      const el = document.getElementById(`section-${tab.toLowerCase()}`);
+      if (!el) return;
+      const navH = isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_HEIGHT;
+      window.scrollTo({ top: el.offsetTop - navH, behavior: 'smooth' });
+    }, 50);
   };
 
-  // ── Global scroll reveal (for hero section) ──
+  // ── Sub-page navigation ──
+  const handleNavigate = (page) => {
+    setSubPage(page);
+    setSelectedSession(null);
+    window.scrollTo({ top: 0 });
+  };
+
+  const handleSelectSession = (session) => {
+    setSelectedSession(session);
+    window.scrollTo({ top: 0 });
+  };
+
+  const handleBackToInsight = () => {
+    setSelectedSession(null);
+    window.scrollTo({ top: 0 });
+  };
+
+  const handleBackToMain = () => {
+    setSubPage(null);
+    setSelectedSession(null);
+    // Scroll back to activities section
+    setTimeout(() => {
+      const el = document.getElementById('section-activities');
+      if (!el) return;
+      const navH = isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_HEIGHT;
+      window.scrollTo({ top: el.offsetTop - navH, behavior: 'smooth' });
+    }, 50);
+  };
+
+  // ── Global scroll reveal ──
   useEffect(() => {
     if (!splashDone) return;
     const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        }),
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
       { threshold: 0.1 }
     );
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [splashDone]);
+  }, [splashDone, subPage]);
 
   const navH = isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_HEIGHT;
 
   return (
     <>
-      {/* Scroll Progress */}
       <div id="scroll-progress" />
-
-      {/* Cursor Glow */}
       <div id="cursor-glow" ref={cursorRef} />
 
       {/* Splash Screen */}
@@ -136,23 +168,39 @@ export default function App() {
         </div>
       )}
 
-      {/* Particle Background */}
       <ParticleBackground />
-
-      {/* Navbar */}
       <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
 
-      {/* Main Content */}
       <main style={{ paddingTop: navH, position: 'relative', zIndex: 1 }}>
-        <HeroSection onTabChange={handleTabChange} />
-        <ActivitiesSection />
-        <EventsSection />
-        <AboutSection />
-        <TeamSection />
-        <Footer />
+
+        {/* ── Sub Pages ── */}
+        {subPage === 'insight-sessions' && !selectedSession && (
+          <InsightSessionsPage
+            onSelectSession={handleSelectSession}
+            onBack={handleBackToMain}
+          />
+        )}
+
+        {subPage === 'insight-sessions' && selectedSession && (
+          <KSSDetailPage
+            session={selectedSession}
+            onBack={handleBackToInsight}
+          />
+        )}
+
+        {/* ── Main Page ── */}
+        {!subPage && (
+          <>
+            <HeroSection onTabChange={handleTabChange} />
+            <ActivitiesSection onNavigate={handleNavigate} />
+            <EventsSection />
+            <AboutSection />
+            <TeamSection />
+            <Footer />
+          </>
+        )}
       </main>
 
-      {/* Back to Top */}
       <button id="back-to-top" aria-label="Back to top">↑</button>
     </>
   );
