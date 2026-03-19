@@ -96,7 +96,7 @@ export const teamMembers = [
     instagram: null,
   },
   {
-    id: 6,
+    id: 7,
     name: 'Arya Kaushik',
     role: 'Core Team Member',
     year: '1st Year',
@@ -109,7 +109,7 @@ export const teamMembers = [
     instagram: null,
   },
   {
-    id: 7,
+    id: 6,
     name: 'Astha Shukla',
     role: 'Core Team Member',
     year: '1st Year',
