@@ -108,3 +108,96 @@
 .shimmer:hover::after { animation:shimmer .7s ease forwards; }
 
 .tilt { transform-style:preserve-3d; will-change:transform; }
+
+/* ══════════════════════════════════
+   CINEMATIC SCROLL EFFECTS v2
+   Inspired by hacknovate07.tech
+══════════════════════════════════ */
+
+/* ── Pop-in from below ── */
+@keyframes popIn {
+  from { opacity:0; transform:translateY(60px) scale(.94); }
+  to   { opacity:1; transform:none; }
+}
+/* ── Pop-in from left ── */
+@keyframes popLeft {
+  from { opacity:0; transform:translateX(-80px) scale(.95); }
+  to   { opacity:1; transform:none; }
+}
+/* ── Pop-in from right ── */
+@keyframes popRight {
+  from { opacity:0; transform:translateX(80px) scale(.95); }
+  to   { opacity:1; transform:none; }
+}
+/* ── Word blur reveal (hacknovate style) ── */
+@keyframes wordReveal {
+  from { opacity:0; transform:translateY(32px); filter:blur(8px); }
+  to   { opacity:1; transform:none; filter:blur(0); }
+}
+/* ── Scale reveal ── */
+@keyframes scaleReveal {
+  from { opacity:0; transform:scale(.8) translateY(24px); }
+  to   { opacity:1; transform:none; }
+}
+/* ── Clip wipe left to right ── */
+@keyframes clipReveal {
+  from { clip-path:inset(0 100% 0 0); }
+  to   { clip-path:inset(0 0% 0 0); }
+}
+/* ── Number count ── */
+@keyframes numPop {
+  0%   { opacity:0; transform:scale(0.5) translateY(20px); }
+  70%  { transform:scale(1.1) translateY(-4px); }
+  100% { opacity:1; transform:none; }
+}
+/* ── Card flip up ── */
+@keyframes cardFlip {
+  from { opacity:0; transform:perspective(800px) rotateX(-30deg) translateY(40px); }
+  to   { opacity:1; transform:perspective(800px) rotateX(0) translateY(0); }
+}
+/* ── Stagger children via CSS ── */
+.cin-container > *:nth-child(1) { animation-delay:.05s; }
+.cin-container > *:nth-child(2) { animation-delay:.12s; }
+.cin-container > *:nth-child(3) { animation-delay:.19s; }
+.cin-container > *:nth-child(4) { animation-delay:.26s; }
+.cin-container > *:nth-child(5) { animation-delay:.33s; }
+.cin-container > *:nth-child(6) { animation-delay:.40s; }
+.cin-container > *:nth-child(7) { animation-delay:.47s; }
+.cin-container > *:nth-child(8) { animation-delay:.54s; }
+.cin-container > *:nth-child(9) { animation-delay:.61s; }
+.cin-container > *:nth-child(10){ animation-delay:.68s; }
+.cin-container > *:nth-child(11){ animation-delay:.75s; }
+.cin-container > *:nth-child(12){ animation-delay:.82s; }
+
+/* ── Pop classes (trigger via JS IntersectionObserver) ── */
+.pop-in {
+  opacity:0;
+  transition:none;
+}
+.pop-in.fired {
+  animation:popIn .75s cubic-bezier(.22,1,.36,1) forwards;
+}
+.pop-left.fired  { animation:popLeft  .75s cubic-bezier(.22,1,.36,1) forwards; }
+.pop-right.fired { animation:popRight .75s cubic-bezier(.22,1,.36,1) forwards; }
+.pop-scale.fired { animation:scaleReveal .7s cubic-bezier(.22,1,.36,1) forwards; }
+.pop-flip.fired  { animation:cardFlip .7s cubic-bezier(.22,1,.36,1) forwards; }
+.pop-word.fired  { animation:wordReveal .8s cubic-bezier(.22,1,.36,1) forwards; }
+.pop-clip.fired  { animation:clipReveal .9s cubic-bezier(.77,0,.18,1) forwards; }
+.pop-num.fired   { animation:numPop .65s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ── Parallax text (JS controlled via --scrollY) ── */
+.parallax-slow  { will-change:transform; }
+.parallax-fast  { will-change:transform; }
+
+/* ── Section entrance bg-color wash ── */
+@keyframes sectionWash {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+.section-visible { animation:sectionWash .6s ease forwards; }
+
+/* ── Hover magnetic button ── */
+.mag-btn {
+  transition:transform .15s ease !important;
+  display:inline-flex;
+}
