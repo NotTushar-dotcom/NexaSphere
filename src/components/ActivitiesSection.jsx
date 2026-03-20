@@ -6,7 +6,7 @@ function useRevealCards(selector) {
     const cards = document.querySelectorAll(selector);
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.08 }
+      { threshold: 0.06 }
     );
     cards.forEach(c => obs.observe(c));
     return () => obs.disconnect();
@@ -16,14 +16,13 @@ function useRevealCards(selector) {
 function ActivityCard({ activity, index, onNavigate }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const [clicking, setClicking] = useState(false);
 
   const handleMouseMove = e => {
     const card = ref.current; if (!card) return;
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width  - 0.5;
     const y = (e.clientY - rect.top)  / rect.height - 0.5;
-    card.style.transform = `translateY(-12px) rotateX(${-y * 14}deg) rotateY(${x * 14}deg) scale(1.02)`;
+    card.style.transform = `translateY(-16px) rotateX(${-y * 16}deg) rotateY(${x * 16}deg) scale(1.02)`;
   };
 
   const handleMouseLeave = () => {
@@ -32,33 +31,28 @@ function ActivityCard({ activity, index, onNavigate }) {
   };
 
   const handleClick = () => {
-    setClicking(true);
-    if (ref.current) {
-      ref.current.style.transform = 'scale(0.93)';
-      setTimeout(() => { if (ref.current) ref.current.style.transform = ''; }, 150);
-    }
-    setTimeout(() => { setClicking(false); onNavigate('activity', activity.title); }, 180);
+    const card = ref.current;
+    if (card) { card.style.transform = 'scale(0.94)'; setTimeout(() => { card.style.transform = ''; }, 150); }
+    setTimeout(() => onNavigate('activity', activity.title), 180);
   };
 
   return (
     <div
       ref={ref}
-      className={`activity-card shimmer-card tilt-card reveal reveal-delay-${Math.min(index + 1, 8)}`}
+      className={`activity-card shimmer-card tilt-card floating-card reveal reveal-delay-${Math.min(index + 1, 8)}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       style={{ perspective: '800px', cursor: 'pointer' }}
     >
-      {/* Card number */}
       <div className="card-number">{String(index + 1).padStart(2, '0')}</div>
-
       <div className="activity-icon">{activity.icon}</div>
       <div className="activity-title">{activity.title}</div>
       <p className="activity-desc">{activity.description}</p>
       <div className="activity-cta">
         <span>Explore</span>
-        <span style={{ transition: 'transform 0.25s', transform: hovered ? 'translateX(4px)' : '' }}>→</span>
+        <span style={{ transition: 'transform 0.25s', transform: hovered ? 'translateX(5px)' : '' }}>→</span>
       </div>
     </div>
   );
