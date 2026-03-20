@@ -1,46 +1,34 @@
 import { useRef } from 'react';
 
-export default function TeamMemberCard({ member, onClick }) {
-  const cardRef = useRef(null);
+export default function TeamMemberCard({ member, onClick, extraClass = '' }) {
+  const ref = useRef(null);
 
-  const handleMouseMove = (e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `translateY(-8px) rotateX(${-y * 12}deg) rotateY(${x * 12}deg)`;
+  const onMove = e => {
+    const c = ref.current; if (!c) return;
+    const rect = c.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width  - .5;
+    const y = (e.clientY - rect.top)  / rect.height - .5;
+    c.style.transform = `translateY(-10px) rotateX(${-y*13}deg) rotateY(${x*13}deg)`;
   };
-
-  const handleMouseLeave = () => {
-    if (cardRef.current) cardRef.current.style.transform = '';
-  };
-
-  const handleClick = () => {
-    // Brief scale down then open modal
-    const card = cardRef.current;
-    if (card) {
-      card.style.transform = 'scale(0.95)';
-      setTimeout(() => { card.style.transform = ''; }, 150);
-    }
-    setTimeout(() => onClick(member), 100);
+  const onLeave = () => { if (ref.current) ref.current.style.transform = ''; };
+  const click = () => {
+    const c = ref.current;
+    if (c) { c.style.transform='scale(.94)'; setTimeout(()=>{c.style.transform='';},140); }
+    setTimeout(()=>onClick(member),100);
   };
 
   return (
-    <div
-      ref={cardRef}
-      className="team-card shimmer-card tilt-card reveal"
-      style={{ perspective: '600px', cursor: 'pointer' }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+    <div ref={ref}
+      className={`team-card shimmer tilt ${extraClass}`}
+      style={{perspective:'600px',cursor:'pointer'}}
+      onMouseMove={onMove} onMouseLeave={onLeave}
+      onClick={click}
+      role="button" tabIndex={0}
+      onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')click();}}
       aria-label={`View ${member.name}'s profile`}
     >
       <div className="team-card-photo-wrap">
-        <img src={member.photo} alt={member.name} className="team-card-photo" />
+        <img src={member.photo} alt={member.name} className="team-card-photo"/>
       </div>
       <div className="team-card-name">{member.name}</div>
       <div className="team-card-role">{member.role}</div>

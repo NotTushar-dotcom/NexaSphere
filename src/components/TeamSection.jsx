@@ -4,63 +4,28 @@ import TeamMemberCard from './TeamMemberCard';
 import TeamMemberModal from './TeamMemberModal';
 
 export default function TeamSection() {
-  const [selectedMember, setSelectedMember] = useState(null);
-
-  // Scroll reveal for all cards
+  const [sel, setSel] = useState(null);
   useEffect(() => {
-    const cards = document.querySelectorAll('#section-team .team-card');
     const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        }),
-      { threshold: 0.08 }
+      e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }),
+      { threshold: .07 }
     );
-    cards.forEach((c) => obs.observe(c));
+    document.querySelectorAll('#section-team .reveal').forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
-
-  // Scroll reveal for title
-  useEffect(() => {
-    const els = document.querySelectorAll('#section-team .reveal:not(.team-card)');
-    const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        }),
-      { threshold: 0.1 }
-    );
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <section className="section" id="section-team">
       <div className="container">
         <h2 className="section-title reveal">Core Team</h2>
-        <p className="section-subtitle reveal" style={{ transitionDelay: '0.1s' }}>
-          The Minds Behind NexaSphere
-        </p>
-
+        <p className="section-subtitle reveal" style={{transitionDelay:'.1s'}}>The Minds Behind NexaSphere</p>
         <div className="team-grid">
-          {teamMembers.map((member, i) => (
-            <TeamMemberCard
-              key={member.id}
-              member={member}
-              onClick={setSelectedMember}
-              style={{ transitionDelay: `${(i % 5) * 0.08}s` }}
-            />
+          {teamMembers.map((m,i) => (
+            <TeamMemberCard key={m.id} member={m} onClick={setSel}
+              extraClass={`ag reveal reveal-delay-${Math.min((i%6)+1,8)}`}/>
           ))}
         </div>
       </div>
-
-      {/* Modal */}
-      {selectedMember && (
-        <TeamMemberModal
-          member={selectedMember}
-          onClose={() => setSelectedMember(null)}
-        />
-      )}
+      {sel && <TeamMemberModal member={sel} onClose={()=>setSel(null)}/>}
     </section>
   );
 }
