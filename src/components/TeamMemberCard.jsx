@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export default function TeamMemberCard({ member, onClick, extraClass = '' }) {
+export default function TeamMemberCard({ member, onClick, extraClass = '', style={} }) {
   const ref = useRef(null);
 
   const onMove = e => {
@@ -20,7 +20,7 @@ export default function TeamMemberCard({ member, onClick, extraClass = '' }) {
   return (
     <div ref={ref}
       className={`team-card shimmer tilt ${extraClass}`}
-      style={{perspective:'600px',cursor:'pointer'}}
+      style={{perspective:'600px',cursor:'pointer',...style}}
       onMouseMove={onMove} onMouseLeave={onLeave}
       onClick={click}
       role="button" tabIndex={0}

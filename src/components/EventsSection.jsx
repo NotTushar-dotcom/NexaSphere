@@ -1,92 +1,52 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { events } from '../data/eventsData';
 
-function useRevealAll(selector) {
+export default function EventsSection() {
   useEffect(() => {
-    const els = document.querySelectorAll(selector);
-    const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.1 }
-    );
-    els.forEach((el) => obs.observe(el));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('fired'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('#section-events .pop-in, #section-events .pop-left, #section-events .pop-right, #section-events .pop-flip').forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
-}
-
-export default function EventsSection() {
-  useRevealAll('#section-events .reveal');
 
   return (
     <section className="section" id="section-events">
       <div className="container">
-        <h2 className="section-title reveal">Our Events</h2>
-        <p className="section-subtitle reveal" style={{ transitionDelay: '0.1s' }}>
-          Where Ideas Come to Life
-        </p>
+        <h2 className="section-title pop-in">Our Events</h2>
+        <p className="section-subtitle pop-in" style={{animationDelay:'.1s'}}>Where Ideas Come to Life</p>
 
         <div className="events-timeline">
-          {events.map((event, i) => (
-            <div className="timeline-item reveal" key={event.id}>
-              {/* Dot */}
-              <div
-                className={`timeline-dot${event.status === 'upcoming' ? ' upcoming timeline-dot-upcoming' : ''}`}
-              />
-
-              {/* Card */}
-              <div className={`timeline-card shimmer-card reveal-delay-${Math.min(i + 1, 6)}`}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '1.6rem' }}>{event.icon}</span>
-                  <div className="timeline-event-name">{event.name}</div>
+          {events.map((ev, i) => (
+            <div className="timeline-item" key={ev.id}>
+              <div className={`timeline-dot${ev.status==='upcoming'?' upcoming':''}`}/>
+              <div className={`timeline-card shimmer ${i%2===0?'pop-left':'pop-right'}`} style={{animationDelay:`${i*.12}s`}}>
+                <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'8px'}}>
+                  <span style={{fontSize:'1.5rem'}}>{ev.icon}</span>
+                  <div className="timeline-event-name">{ev.name}</div>
                 </div>
-
-                <div className="timeline-event-date">
-                  📅 {event.date}
-                </div>
-
-                <p className="timeline-event-desc">{event.description}</p>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                  <span className={`timeline-badge ${event.status}`}>
-                    {event.status === 'completed' ? '✅ Completed' : '🔜 Upcoming'}
+                <div className="timeline-event-date">📅 {ev.date}</div>
+                <p className="timeline-event-desc">{ev.description}</p>
+                <div style={{display:'flex',alignItems:'center',gap:'8px',flexWrap:'wrap'}}>
+                  <span className={`timeline-badge ${ev.status}`}>
+                    {ev.status==='completed'?'✅ Completed':'🔜 Upcoming'}
                   </span>
-                  {event.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      style={{
-                        fontSize: '0.72rem',
-                        padding: '2px 8px',
-                        borderRadius: '10px',
-                        background: 'rgba(99,102,241,0.12)',
-                        color: 'var(--indigo)',
-                        border: '1px solid rgba(99,102,241,0.2)',
-                        fontWeight: 600,
-                        letterSpacing: '0.04em',
-                      }}
-                    >
-                      {tag}
-                    </span>
+                  {ev.tags?.map(tag=>(
+                    <span key={tag} style={{fontSize:'.7rem',padding:'2px 8px',borderRadius:'10px',background:'var(--c2a)',color:'var(--c2)',border:'1px solid var(--c2b)',fontWeight:600,letterSpacing:'.04em'}}>{tag}</span>
                   ))}
                 </div>
               </div>
             </div>
           ))}
 
-          {/* Coming soon placeholder */}
-          {events.length === 0 && (
-            <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '48px 0' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🚀</div>
-              <p>Exciting events coming soon. Stay tuned!</p>
-            </div>
-          )}
-
-          {events.length > 0 && (
-            <div className="timeline-item reveal">
-              <div className="timeline-dot upcoming timeline-dot-upcoming" />
-              <div className="timeline-card" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-                <span style={{ fontSize: '1.5rem' }}>🚀</span>
-                <p style={{ marginTop: '8px', fontSize: '0.9rem' }}>
-                  More exciting events are being planned. Watch this space!
-                </p>
+          {events.length>0&&(
+            <div className="timeline-item">
+              <div className="timeline-dot upcoming"/>
+              <div className="timeline-card pop-in" style={{textAlign:'center',color:'var(--t3)'}}>
+                <span style={{fontSize:'1.4rem'}}>🚀</span>
+                <p style={{marginTop:'7px',fontSize:'.88rem'}}>More exciting events are being planned. Watch this space!</p>
               </div>
             </div>
           )}

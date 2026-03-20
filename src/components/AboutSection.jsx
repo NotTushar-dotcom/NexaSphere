@@ -21,9 +21,12 @@ function Pill({ text }) {
 
 export default function AboutSection() {
   useEffect(() => {
-    const els = document.querySelectorAll('#section-about .reveal,#section-about .reveal-left,#section-about .reveal-right');
-    const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.08});
-    els.forEach(el=>obs.observe(el));
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){e.target.classList.add('fired'); obs.unobserve(e.target);}
+      });
+    },{threshold:.1});
+    document.querySelectorAll('#section-about .pop-in,.pop-left,.pop-right,.pop-word,.pop-scale').forEach(el=>obs.observe(el));
     return ()=>obs.disconnect();
   }, []);
 
@@ -31,29 +34,29 @@ export default function AboutSection() {
     <section className="section" id="section-about" style={{position:'relative',overflow:'hidden'}}>
       <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'600px',height:'600px',borderRadius:'50%',background:'radial-gradient(circle,rgba(124,110,255,.03) 0%,transparent 70%)',pointerEvents:'none'}}/>
       <div className="container" style={{position:'relative',zIndex:1}}>
-        <h2 className="section-title reveal">About NexaSphere</h2>
-        <p className="section-subtitle reveal" style={{transitionDelay:'.1s'}}>Building Tomorrow&apos;s Tech Leaders Today</p>
+        <h2 className="section-title pop-word">About NexaSphere</h2>
+        <p className="section-subtitle pop-in" style={{transitionDelay:'.1s'}}>Building Tomorrow&apos;s Tech Leaders Today</p>
 
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'48px',alignItems:'center',maxWidth:'940px',margin:'0 auto 48px'}}>
           <div>
-            <p className="about-text reveal-left" style={{transitionDelay:'.1s'}}>
+            <p className="about-text pop-left" style={{transitionDelay:'.1s'}}>
               <strong style={{color:'var(--c1)'}}>NexaSphere</strong> is a student-driven tech ecosystem at{' '}
               <strong style={{color:'var(--c2)'}}>GL Bajaj Group of Institutions, Mathura</strong>.
               Founded to create a thriving community of passionate engineers and innovators,
               we bridge the gap between academic learning and real-world technology.
             </p>
-            <p className="about-text reveal-left" style={{marginTop:'14px',transitionDelay:'.2s'}}>
+            <p className="about-text pop-left" style={{marginTop:'14px',transitionDelay:'.2s'}}>
               From intense hackathons to insightful knowledge sessions, NexaSphere is where
               curiosity meets collaboration. We believe the best learning happens when you
               build, share, and grow together.
             </p>
-            <div style={{marginTop:'16px',paddingTop:'16px',borderTop:'1px solid var(--bdr)',transitionDelay:'.25s'}} className="reveal-left">
+            <div style={{marginTop:'16px',paddingTop:'16px',borderTop:'1px solid var(--bdr)',transitionDelay:'.25s'}} className="pop-left">
               <div style={{fontFamily:'Orbitron,monospace',fontSize:'.75rem',color:'var(--c2)',fontWeight:700,letterSpacing:'.1em',marginBottom:'5px',textTransform:'uppercase'}}>Proposed by</div>
               <div style={{color:'var(--t2)',fontSize:'.9rem'}}>Tanishk Bansal &amp; Ayush Sharma</div>
             </div>
           </div>
 
-          <div className="reveal-right" style={{transitionDelay:'.15s'}}>
+          <div className="pop-right" style={{transitionDelay:'.15s'}}>
             <div className="about-card-inner ag"
               onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--c1b)';e.currentTarget.style.boxShadow='var(--sh1)';}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--bdr)';e.currentTarget.style.boxShadow='';}}
@@ -67,7 +70,7 @@ export default function AboutSection() {
           </div>
         </div>
 
-        <div className="about-actions reveal" style={{transitionDelay:'.3s'}}>
+        <div className="about-actions pop-in" style={{transitionDelay:'.3s'}}>
           <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">💬 Join WhatsApp</a>
           <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="btn btn-linkedin">🔗 LinkedIn</a>
         </div>
