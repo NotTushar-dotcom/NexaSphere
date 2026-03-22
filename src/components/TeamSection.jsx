@@ -59,11 +59,19 @@ export default function TeamSection() {
   const [sel, setSel] = useState(null);
 
   useEffect(() => {
+    const elements = document.querySelectorAll('#section-team .pop-flip, #section-team .pop-in, #section-team .pop-word');
     const obs = new IntersectionObserver(entries=>{
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('fired');obs.unobserve(e.target);}});
-    },{threshold:.07});
-    document.querySelectorAll('#section-team .pop-flip,.pop-in,.pop-word').forEach(el=>obs.observe(el));
-    return()=>obs.disconnect();
+    },{threshold:0, rootMargin:'0px 0px -10px 0px'});
+    elements.forEach(el=>obs.observe(el));
+    // Fallback: if already scrolled into view, fire immediately
+    const fallback = setTimeout(() => {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 100) el.classList.add('fired');
+      });
+    }, 120);
+    return()=>{obs.disconnect(); clearTimeout(fallback);};
   },[]);
 
   return (

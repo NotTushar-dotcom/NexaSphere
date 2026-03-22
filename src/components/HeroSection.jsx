@@ -169,7 +169,7 @@ export default function HeroSection({ onTabChange, theme = 'dark' }) {
         position:'absolute',inset:0,zIndex:0,
         backgroundImage:`url(${nexasphereLogo})`,
         backgroundSize:'55%',backgroundPosition:'center',backgroundRepeat:'no-repeat',
-        filter: isLight ? 'brightness(.05) saturate(.4)' : 'brightness(.08) saturate(1.2)',
+        filter: isLight ? 'brightness(.18) saturate(1.6) hue-rotate(240deg)' : 'brightness(.08) saturate(1.2)',
         transform:'scale(1.04)',
       }}/>
       <div className="hero-overlay"/>
