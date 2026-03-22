@@ -7,20 +7,21 @@ const TABS = ['Home','Activities','Events','About','Team'];
 export default function Navbar({ activeTab, onTabChange }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobile,   setMobile]   = useState(window.innerWidth <= 768);
+
   useEffect(() => {
     const s = () => setScrolled(window.scrollY > 20);
     const r = () => setMobile(window.innerWidth <= 768);
-    window.addEventListener('scroll', s, { passive: true });
-    window.addEventListener('resize', r, { passive: true });
+    window.addEventListener('scroll', s, { passive:true });
+    window.addEventListener('resize', r, { passive:true });
     return () => { window.removeEventListener('scroll', s); window.removeEventListener('resize', r); };
   }, []);
 
   if (mobile) return (
     <nav className="ns-navbar-mobile">
       <div className="ns-mobile-top">
-        <img src={nexasphereLogo} alt="" className="ns-mobile-logo" style={{filter:'drop-shadow(0 0 5px rgba(0,229,255,.5))'}}/>
+        <img src={nexasphereLogo} alt="NexaSphere" className="ns-mobile-logo-ns"/>
         <span className="ns-mobile-brand"><span>NexaSphere</span></span>
-        <img src={glbajajLogo} alt="" className="ns-mobile-logo"/>
+        <img src={glbajajLogo}    alt="GL Bajaj"   className="ns-mobile-logo-gl"/>
       </div>
       <div className="ns-mobile-tabs">
         {TABS.map(t => (
@@ -33,12 +34,14 @@ export default function Navbar({ activeTab, onTabChange }) {
   return (
     <nav className={`ns-navbar${scrolled?' scrolled':''}`}>
       <div className="container">
+        {/* Left: NexaSphere brand */}
         <div className="ns-nav-logos">
-          <img src={nexasphereLogo} alt="NexaSphere" className="ns-nav-logo-img"/>
+          <img src={nexasphereLogo} alt="NexaSphere" className="ns-nav-logo-ns"/>
           <div className="ns-nav-divider"/>
           <span className="ns-nav-brand">NexaSphere</span>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
+        {/* Right: tabs + GL Bajaj logo */}
+        <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
           <ul className="ns-nav-tabs">
             {TABS.map(t => (
               <li key={t}>
@@ -47,7 +50,8 @@ export default function Navbar({ activeTab, onTabChange }) {
             ))}
           </ul>
           <div className="ns-nav-divider"/>
-          <img src={glbajajLogo} alt="GL Bajaj" className="ns-nav-logo-img" style={{height:'30px'}}/>
+          {/* GL Bajaj logo with white bg pill for dark mode visibility */}
+          <img src={glbajajLogo} alt="GL Bajaj" className="ns-nav-logo-gl"/>
         </div>
       </div>
     </nav>
