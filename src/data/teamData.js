@@ -33,7 +33,7 @@ export const teamMembers = [
   {
     id: 2,
     name: 'Tanishk Bansal',
-    role: 'Co-organiser',
+    role: 'Organiser',
     year: '1st Year',
     branch: 'CSE',
     section: 'E',
