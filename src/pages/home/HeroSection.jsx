@@ -206,9 +206,9 @@ export default function HeroSection({ onTabChange, theme = 'dark' }) {
             borderRadius:'16px',maxWidth:'420px',textAlign:'center',
           }}>
             <p style={{fontSize:'.82rem',color:'var(--t2)',marginBottom:'10px',lineHeight:1.5}}>
-              🚀 Want to be part of the NexaSphere?
+              🚀 Want to be part of the NexaSphere Core Team?
             </p>
-            <RippleBtn cls="btn-join" href={JOIN_CORE_FORM}>✨ Apply Here</RippleBtn>
+            <RippleBtn cls="btn-join" href={JOIN_CORE_FORM}>✨ Apply for Core Team Here</RippleBtn>
           </div>
         </div>
 
