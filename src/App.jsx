@@ -14,6 +14,11 @@ import Footer              from './components/Footer';
 import ActivityDetailPage  from './components/ActivityDetailPage';
 import EventDetailPage     from './components/EventDetailPage';
 import CinematicOpening    from './components/CinematicOpening';
+import ActivitiesPage      from './components/ActivitiesPage';
+import EventsPage          from './components/EventsPage';
+import AboutPage           from './components/AboutPage';
+import TeamPage            from './components/TeamPage';
+import KSSEventPage        from './components/KSSEventPage';
 
 import { activityPages }   from './data/activities/index';
 import nexasphereLogo      from './assets/images/logos/nexasphere-logo.png';
@@ -272,6 +277,11 @@ export default function App() {
   },[]);
 
   const onTab=useCallback(tab=>{
+    // These tabs get their own dedicated page
+    if(['Activities','Events','About','Team'].includes(tab)){
+      nav(()=>{setPage({type:'section',section:tab});setActiveTab(tab);});
+      return;
+    }
     nav(()=>{
       setPage(null);setActiveTab(tab);
       setTimeout(()=>{
@@ -290,6 +300,10 @@ export default function App() {
     nav(()=>setPage(p=>({...p,type:'event',event:ev})));
   },[nav]);
 
+  const onKSSClick=useCallback(()=>{
+    nav(()=>setPage({type:'kss'}));
+  },[nav]);
+
   const onBackAct=useCallback(()=>{
     nav(()=>setPage(p=>({type:'activity',activityKey:p.activityKey})));
   },[nav]);
@@ -304,6 +318,14 @@ export default function App() {
       },50);
     });
   },[nav,mobile]);
+
+  const onBackToSection=useCallback((section)=>{
+    nav(()=>setPage({type:'section',section}));
+  },[nav]);
+
+  const onBackHome=useCallback(()=>{
+    nav(()=>{setPage(null);setActiveTab('Home');window.scrollTo({top:0});});
+  },[nav]);
 
   const nh=mobile?MNH:DNH;
   const cur=page?.activityKey?activityPages[page.activityKey]:null;
@@ -328,9 +350,37 @@ export default function App() {
       <Navbar activeTab={activeTab} onTabChange={onTab}/>
 
       <main style={{paddingTop:nh,position:'relative',zIndex:1}}>
+        {/* Section pages — navbar tab clicks */}
+        {page?.type==='section'&&page.section==='Activities'&&(
+          <PageIn k="pg-activities">
+            <ActivitiesPage onNavigate={onNavigate} onBack={onBackHome}/>
+          </PageIn>
+        )}
+        {page?.type==='section'&&page.section==='Events'&&(
+          <PageIn k="pg-events">
+            <EventsPage onBack={onBackHome} onEventClick={onKSSClick}/>
+          </PageIn>
+        )}
+        {page?.type==='section'&&page.section==='About'&&(
+          <PageIn k="pg-about">
+            <AboutPage onBack={onBackHome}/>
+          </PageIn>
+        )}
+        {page?.type==='section'&&page.section==='Team'&&(
+          <PageIn k="pg-team">
+            <TeamPage onBack={onBackHome}/>
+          </PageIn>
+        )}
+        {/* KSS detail page */}
+        {page?.type==='kss'&&(
+          <PageIn k="pg-kss">
+            <KSSEventPage onBack={()=>nav(()=>setPage({type:'section',section:'Events'}))}/>
+          </PageIn>
+        )}
+        {/* Activity detail pages */}
         {page?.type==='activity'&&cur&&(
           <PageIn k={`a-${page.activityKey}`}>
-            <ActivityDetailPage activity={cur} onBack={onBackMain} onSelectEvent={onEvent}/>
+            <ActivityDetailPage activity={cur} onBack={()=>nav(()=>setPage({type:'section',section:'Activities'}))} onSelectEvent={onEvent}/>
           </PageIn>
         )}
         {page?.type==='event'&&page.event&&cur&&(
@@ -338,6 +388,7 @@ export default function App() {
             <EventDetailPage event={page.event} activityColor={cur.color} activityIcon={cur.icon} onBack={onBackAct}/>
           </PageIn>
         )}
+        {/* Main home page */}
         {!page&&(
           <PageIn k="main">
             <HeroSection onTabChange={onTab} theme={theme}/>
