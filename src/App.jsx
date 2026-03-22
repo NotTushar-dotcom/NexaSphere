@@ -3,22 +3,21 @@ import './styles/globals.css';
 import './styles/animations.css';
 import './styles/components.css';
 
-import ParticleBackground  from './components/ParticleBackground';
-import Navbar              from './components/Navbar';
-import HeroSection         from './components/HeroSection';
-import ActivitiesSection   from './components/ActivitiesSection';
-import EventsSection       from './components/EventsSection';
-import AboutSection        from './components/AboutSection';
-import TeamSection         from './components/TeamSection';
-import Footer              from './components/Footer';
-import ActivityDetailPage  from './components/ActivityDetailPage';
-import EventDetailPage     from './components/EventDetailPage';
-import CinematicOpening    from './components/CinematicOpening';
-import ActivitiesPage      from './components/ActivitiesPage';
-import EventsPage          from './components/EventsPage';
-import AboutPage           from './components/AboutPage';
-import TeamPage            from './components/TeamPage';
-import KSSEventPage        from './components/KSSEventPage';
+import ParticleBackground  from './shared/ParticleBackground';
+import Navbar              from './shared/Navbar';
+import HeroSection         from './pages/home/HeroSection';
+import ActivitiesSection   from './pages/activities/ActivitiesSection';
+import EventsSection       from './pages/events/EventsSection';
+import AboutSection        from './pages/about/AboutSection';
+import TeamSection         from './pages/team/TeamSection';
+import Footer              from './shared/Footer';
+import ActivityDetailPage  from './pages/activities/ActivityDetailPage';
+import EventDetailPage     from './pages/events/EventDetailPage';
+import CinematicOpening    from './shared/CinematicOpening';
+import ActivitiesPage      from './pages/activities/ActivitiesPage';
+import EventsPage          from './pages/events/EventsPage';
+import AboutPage           from './pages/about/AboutPage';
+import TeamPage            from './pages/team/TeamPage';
 
 import { activityPages }   from './data/activities/index';
 import nexasphereLogo      from './assets/images/logos/nexasphere-logo.png';
@@ -301,7 +300,8 @@ export default function App() {
   },[nav]);
 
   const onKSSClick=useCallback(()=>{
-    nav(()=>setPage({type:'kss'}));
+    // Link to the existing Insight Session page which contains KSS #153
+    nav(()=>setPage({type:'activity',activityKey:'Insight Session'}));
   },[nav]);
 
   const onBackAct=useCallback(()=>{
@@ -369,12 +369,6 @@ export default function App() {
         {page?.type==='section'&&page.section==='Team'&&(
           <PageIn k="pg-team">
             <TeamPage onBack={onBackHome}/>
-          </PageIn>
-        )}
-        {/* KSS detail page */}
-        {page?.type==='kss'&&(
-          <PageIn k="pg-kss">
-            <KSSEventPage onBack={()=>nav(()=>setPage({type:'section',section:'Events'}))}/>
           </PageIn>
         )}
         {/* Activity detail pages */}
