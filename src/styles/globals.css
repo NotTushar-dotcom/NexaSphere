@@ -44,34 +44,34 @@
 
 /* ── LIGHT MODE ── */
 [data-theme="light"] {
-  /* Warm beige-tinted dark — NOT white. Rich, cinematic. */
-  --bg:   #0e0c0a;
-  --bg2:  #141210;
-  --card: #1a1714;
-  --card2:#201d19;
+  /* Claude-interface warm beige — soft, refined, editorial */
+  --bg:   #faf8f5;
+  --bg2:  #f2ede7;
+  --card: #ffffff;
+  --card2:#f7f4f0;
 
-  --c1: #f0a500;   /* warm amber */
-  --c2: #e86a2e;   /* burnt orange */
-  --c3: #c94fd8;   /* purple pop */
-  --c4: #ff2d78;   /* pink */
-  --c5: #4ade80;   /* green */
+  --c1: #d97706;   /* warm amber — readable on white */
+  --c2: #7c3aed;   /* violet */
+  --c3: #be185d;   /* rose */
+  --c4: #0891b2;   /* teal */
+  --c5: #059669;   /* green */
 
-  --c1a: rgba(240,165,0,0.10);
-  --c1b: rgba(240,165,0,0.28);
-  --c1g: rgba(240,165,0,0.42);
-  --c2a: rgba(232,106,46,0.10);
-  --c2b: rgba(232,106,46,0.25);
+  --c1a: rgba(217,119,6,0.08);
+  --c1b: rgba(217,119,6,0.22);
+  --c1g: rgba(217,119,6,0.35);
+  --c2a: rgba(124,58,237,0.07);
+  --c2b: rgba(124,58,237,0.20);
 
-  --t1: #f5efe6;
-  --t2: #a89880;
-  --t3: #5a4f42;
+  --t1: #1c1917;
+  --t2: #6b6660;
+  --t3: #a8a29e;
 
-  --bdr:  rgba(240,165,0,0.10);
-  --bdr2: rgba(240,165,0,0.28);
+  --bdr:  rgba(28,25,23,0.08);
+  --bdr2: rgba(28,25,23,0.16);
 
-  --sh1: 0 0 28px rgba(240,165,0,0.25),0 0 60px rgba(240,165,0,0.08);
-  --sh2: 0 0 28px rgba(232,106,46,0.22),0 0 60px rgba(232,106,46,0.07);
-  --shcard: 0 12px 48px rgba(0,0,0,0.55);
+  --sh1: 0 2px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04);
+  --sh2: 0 4px 24px rgba(124,58,237,0.12),0 1px 4px rgba(0,0,0,0.04);
+  --shcard: 0 4px 24px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05);
 }
 
 /* ── THEME TRANSITIONS ── */
