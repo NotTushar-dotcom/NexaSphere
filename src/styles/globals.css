@@ -84,6 +84,7 @@ body,body *:not(canvas):not(.no-transition) {
 /* color transitions need to be separate and fast */
 body { color-scheme: dark; }
 [data-theme="light"] { color-scheme: light; }
+[data-theme="light"] body { background: #faf8f5; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -123,6 +124,12 @@ button { cursor: pointer; font-family: 'Rajdhani', sans-serif; border: none; bac
   text-align: center;
   margin-bottom: 12px;
   background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 55%, var(--c3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="light"] .section-title {
+  background: linear-gradient(135deg, #d97706 0%, #7c3aed 60%, #be185d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
