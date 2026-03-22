@@ -29,12 +29,13 @@ function MemberCard({ member, idx, onClick }) {
 
   return (
     <div ref={ref}
-      className="team-card shimmer pop-flip"
+      className="team-card shimmer"
       style={{
         cursor:'pointer',perspective:'800px',
         animation:`ag 7s ease-in-out ${agDelay[idx%12]}s infinite`,
         willChange:'transform',
         animationFillMode:'both',
+        opacity:1,
       }}
       onMouseMove={onMove} onMouseLeave={onLeave} onClick={click}
       role="button" tabIndex={0}

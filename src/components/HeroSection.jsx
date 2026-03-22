@@ -164,12 +164,14 @@ export default function HeroSection({ onTabChange, theme = 'dark' }) {
 
   return (
     <section className="hero-section" id="section-home">
-      {/* BG — nexasphere logo as hero bg, very dark */}
+      {/* BG — nexasphere logo as hero bg */}
       <div style={{
         position:'absolute',inset:0,zIndex:0,
         backgroundImage:`url(${nexasphereLogo})`,
         backgroundSize:'55%',backgroundPosition:'center',backgroundRepeat:'no-repeat',
-        filter: isLight ? 'brightness(.18) saturate(1.6) hue-rotate(240deg)' : 'brightness(.08) saturate(1.2)',
+        filter: isLight
+          ? 'brightness(.55) saturate(2.2) hue-rotate(220deg) opacity(0.22)'
+          : 'brightness(.08) saturate(1.2)',
         transform:'scale(1.04)',
       }}/>
       <div className="hero-overlay"/>
