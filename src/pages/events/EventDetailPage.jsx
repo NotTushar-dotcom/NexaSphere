@@ -274,7 +274,7 @@ export default function EventDetailPage({ event, activityColor, activityIcon, on
           }}
             onMouseEnter={e => { e.target.style.background = `rgba(${rgb},0.12)`; e.target.style.transform = 'translateX(-4px)'; }}
             onMouseLeave={e => { e.target.style.background = 'none'; e.target.style.transform = ''; }}
-          >← Back to Insight Sessions</button>
+          >← Back</button>
 
           <div style={{
             opacity: mounted ? 1 : 0,
@@ -289,7 +289,7 @@ export default function EventDetailPage({ event, activityColor, activityIcon, on
               fontSize: '0.78rem', color, fontFamily: 'Rajdhani,sans-serif',
               fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em',
             }}>
-              {activityIcon} Insight Session · KSS #153
+              {activityIcon} {event.shortName || event.name}
             </div>
 
             <h1 style={{
@@ -299,16 +299,18 @@ export default function EventDetailPage({ event, activityColor, activityIcon, on
               background: `linear-gradient(135deg, ${color}, #ffffff90)`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
-              Impact of AI 🤖🔥
+              {event.name || 'Event Details'}
             </h1>
 
-            <p style={{
-              fontFamily: 'Rajdhani,sans-serif', fontSize: '1.05rem',
-              color: `rgba(${rgb},0.8)`, fontStyle: 'italic', marginBottom: '6px',
-              opacity: mounted ? 1 : 0, transition: 'opacity 0.7s 0.2s',
-            }}>
-              "{event.tagline}"
-            </p>
+            {event.tagline && (
+              <p style={{
+                fontFamily: 'Rajdhani,sans-serif', fontSize: '1.05rem',
+                color: `rgba(${rgb},0.8)`, fontStyle: 'italic', marginBottom: '6px',
+                opacity: mounted ? 1 : 0, transition: 'opacity 0.7s 0.2s',
+              }}>
+                "{event.tagline}"
+              </p>
+            )}
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginBottom: '28px', marginTop: '12px' }}>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>📅 {event.date}</span>

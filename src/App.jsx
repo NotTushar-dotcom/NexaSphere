@@ -299,9 +299,9 @@ export default function App() {
     nav(()=>setPage(p=>({...p,type:'event',event:ev})));
   },[nav]);
 
-  const onKSSClick=useCallback(()=>{
-    // Link to the existing Insight Session page which contains KSS #153
-    nav(()=>setPage({type:'activity',activityKey:'Insight Session'}));
+  const onKSSClick=useCallback(ev=>{
+    // Show KSS event detail page with Insight Session as activity context
+    nav(()=>setPage({type:'event',activityKey:'Insight Session',event:ev}));
   },[nav]);
 
   const onBackAct=useCallback(()=>{
@@ -379,7 +379,15 @@ export default function App() {
         )}
         {page?.type==='event'&&page.event&&cur&&(
           <PageIn k={`e-${page.event?.id}`}>
-            <EventDetailPage event={page.event} activityColor={cur.color} activityIcon={cur.icon} onBack={onBackAct}/>
+            {(() => {
+              // For KSS event from eventsData, use the corresponding conducted event from activity
+              let displayEvent = page.event;
+              if (page.activityKey === 'Insight Session' && page.event.id === 1) {
+                // Find KSS #153 in conducted events
+                displayEvent = cur.conductedEvents?.find(e => e.id === 'kss-153') || page.event;
+              }
+              return <EventDetailPage event={displayEvent} activityColor={cur.color} activityIcon={cur.icon} onBack={onBackAct}/>;
+            })()}
           </PageIn>
         )}
         {/* Main home page */}
@@ -387,7 +395,7 @@ export default function App() {
           <PageIn k="main">
             <HeroSection onTabChange={onTab} theme={theme}/>
             <ActivitiesSection onNavigate={onNavigate}/>
-            <EventsSection/>
+            <EventsSection onEventClick={onKSSClick}/>
             <AboutSection/>
             <TeamSection/>
             <Footer/>
