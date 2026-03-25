@@ -98,8 +98,8 @@ const insightSession = {
       ],
       closingNote:
         "This is just the BEGINNING. Bigger events. Deeper sessions. More ideas. More inspiration. The journey has just started and we're only getting warmed up! 🔥",
-      photoLink: null,   // ← Add Google Drive link here when ready
-      videoLink: null,   // ← Add YouTube link here when ready
+      photoLink: 'https://drive.google.com/drive/folders/1f4J58M59YxIKnXIik8Om10EoucyE_mNT?usp=drive_link',
+      videoLink: 'https://drive.google.com/drive/folders/1D-LQlN_WmMT10IhD1NnMcjJPi5dWheDf?usp=drive_link',
     },
 
     // ── Add next KSS below ──
