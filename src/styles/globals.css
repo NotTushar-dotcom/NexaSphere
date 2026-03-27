@@ -133,20 +133,47 @@ button { cursor: none; font-family: 'Rajdhani', sans-serif; border: none; backgr
 /* ── SCROLL PROGRESS ── */
 #scroll-progress {
   position:fixed; top:0; left:0; height:2px; width:0%;
-  background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4));
-  z-index:9998; box-shadow: 0 0 8px var(--c1g);
+  background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c1));
+  background-size:200% 100%;
+  z-index:9998;
+  box-shadow: 0 0 8px var(--c1g), 0 0 18px rgba(123,111,255,0.3);
+  animation: progressPulse 2.5s ease-in-out infinite, gradientShift 3s linear infinite;
+  transition: none !important;
 }
 
 /* ── THEME TOGGLE ── */
 #theme-toggle {
   position:fixed; bottom:28px; left:28px;
-  width:44px; height:44px; border-radius:50%;
-  background:var(--card); border:1px solid var(--bdr2);
-  color:var(--c1); font-size:1.1rem;
+  width:48px; height:48px; border-radius:50%;
+  background:var(--card); border:1.5px solid var(--bdr2);
+  color:var(--c1); font-size:1.2rem;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; z-index:800; box-shadow:var(--sh1);
+  cursor:pointer; z-index:800;
+  box-shadow: var(--sh1), 0 0 22px var(--c1g);
+  transition: transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s !important;
 }
-#theme-toggle:hover { transform:rotate(22deg) scale(1.12) !important; box-shadow:0 0 24px var(--c1g) !important; }
+#theme-toggle:hover {
+  transform: rotate(25deg) scale(1.18) !important;
+  box-shadow: 0 0 36px var(--c1g), 0 0 70px rgba(123,111,255,.25) !important;
+  border-color: var(--c1) !important;
+}
+/* Orbit particles around toggle */
+#theme-toggle::before {
+  content:'';
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:var(--c1); opacity:.8;
+  animation: toggleOrbit 2.2s linear infinite;
+}
+#theme-toggle::after {
+  content:'';
+  position:absolute; width:4px; height:4px; border-radius:50%;
+  background:var(--c2); opacity:.55;
+  animation: toggleOrbitReverse 3.1s linear infinite;
+}
+#theme-toggle.storm-spinning {
+  animation: spin 0.4s linear infinite !important;
+  box-shadow: 0 0 50px var(--c1g), 0 0 100px rgba(123,111,255,.4) !important;
+}
 
 /* ── BACK TO TOP ── */
 #back-to-top {

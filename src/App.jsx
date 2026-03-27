@@ -14,6 +14,7 @@ import Footer              from './shared/Footer';
 import ActivityDetailPage  from './pages/activities/ActivityDetailPage';
 import EventDetailPage     from './pages/events/EventDetailPage';
 import CinematicOpening    from './shared/CinematicOpening';
+import StormOverlay        from './shared/StormOverlay';
 import ActivitiesPage      from './pages/activities/ActivitiesPage';
 import EventsPage          from './pages/events/EventsPage';
 import AboutPage           from './pages/about/AboutPage';
@@ -182,14 +183,42 @@ export default function App() {
   const [mobile,   setMobile]   = useState(window.innerWidth<=768);
   const [wipeOn,   setWipeOn]   = useState(false);
   const [wipePh,   setWipePh]   = useState('out');
-  const [page,     setPage]     = useState(null); // null=main, {type,activityKey,event}
+  const [page,     setPage]     = useState(null);
   const [theme,    setTheme]    = useState(()=>localStorage.getItem('ns-theme')||'dark');
+  const [stormOn,  setStormOn]  = useState(false);
+  const [stormTo,  setStormTo]  = useState('light');
+  const stormLock = useRef(false);
 
   // Apply theme to html element
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme);
     localStorage.setItem('ns-theme',theme);
   },[theme]);
+
+  // Storm theme toggle
+  const triggerStorm = useCallback(() => {
+    if (stormLock.current) return;
+    stormLock.current = true;
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setStormTo(nextTheme);
+    setStormOn(true);
+    // Add spinning class to toggle button
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.classList.add('storm-spinning');
+  }, [theme]);
+
+  const onStormMidpoint = useCallback(() => {
+    // Flip theme at storm peak
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+  }, [theme]);
+
+  const onStormDone = useCallback(() => {
+    setStormOn(false);
+    stormLock.current = false;
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.classList.remove('storm-spinning');
+  }, []);
 
   // Scroll progress bar
   useEffect(()=>{
@@ -239,7 +268,7 @@ export default function App() {
     return()=>window.removeEventListener('resize',fn);
   },[]);
 
-  // Scroll reveal + cinematic pop + magnetic buttons
+  // Scroll reveal + cinematic pop + magnetic buttons + 3D card tilt
   useEffect(()=>{
     if(!cinDone)return;
     // Pop observer
@@ -249,6 +278,7 @@ export default function App() {
       });
     },{threshold:.09,rootMargin:'0px 0px -36px 0px'});
     document.querySelectorAll('.pop-in,.pop-left,.pop-right,.pop-scale,.pop-flip,.pop-word,.pop-num').forEach(el=>obs.observe(el));
+
     // Magnetic buttons
     const btns=document.querySelectorAll('.mag-btn');
     const onMove=e=>{
@@ -258,6 +288,25 @@ export default function App() {
         const dy=e.clientY-(rect.top+rect.height/2);
         const d=Math.sqrt(dx*dx+dy*dy);
         btn.style.transform=d<88?`translate(${dx*(88-d)/88*.32}px,${dy*(88-d)/88*.32}px)`:'';
+      });
+
+      // 3D card tilt for activity cards
+      document.querySelectorAll('.activity-card').forEach(card=>{
+        const rect=card.getBoundingClientRect();
+        const cx=rect.left+rect.width/2;
+        const cy=rect.top+rect.height/2;
+        const dx=e.clientX-cx;
+        const dy=e.clientY-cy;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        const maxDist=Math.max(rect.width,rect.height)*0.9;
+        if(dist<maxDist){
+          const intensity=(1-dist/maxDist)*6;
+          card.style.setProperty('--rx',(dx/rect.width*intensity).toFixed(2));
+          card.style.setProperty('--ry',(-dy/rect.height*intensity).toFixed(2));
+        } else {
+          card.style.setProperty('--rx','0');
+          card.style.setProperty('--ry','0');
+        }
       });
     };
     window.addEventListener('mousemove',onMove,{passive:true});
@@ -340,9 +389,18 @@ export default function App() {
       <Cursor/>
       <Wipe on={wipeOn} ph={wipePh}/>
 
+      {/* Storm cinematic overlay */}
+      {stormOn && (
+        <StormOverlay
+          toTheme={stormTo}
+          onMidpoint={onStormMidpoint}
+          onDone={onStormDone}
+        />
+      )}
+
       {/* Theme toggle */}
       <button id="theme-toggle" className="mag-btn"
-        onClick={()=>setTheme(t=>t==='dark'?'light':'dark')}
+        onClick={triggerStorm}
         aria-label="Toggle theme" title={`Switch to ${theme==='dark'?'light':'dark'} mode`}>
         {theme==='dark'?'☀️':'🌙'}
       </button>
