@@ -18,12 +18,13 @@ import ActivitiesPage      from './pages/activities/ActivitiesPage';
 import EventsPage          from './pages/events/EventsPage';
 import AboutPage           from './pages/about/AboutPage';
 import TeamPage            from './pages/team/TeamPage';
+import ContactPage         from './pages/contact/ContactPage';
 
 import { activityPages }   from './data/activities/index';
 import nexasphereLogo      from './assets/images/logos/nexasphere-logo.png';
 
 const MNH = 88, DNH = 64;
-const TABS = ['Home','Activities','Events','About','Team'];
+const TABS = ['Home','Activities','Events','About','Team','Contact'];
 
 /* ── Page wipe transition ── */
 function Wipe({ on, ph }) {
@@ -277,7 +278,7 @@ export default function App() {
 
   const onTab=useCallback(tab=>{
     // These tabs get their own dedicated page
-    if(['Activities','Events','About','Team'].includes(tab)){
+    if(['Activities','Events','About','Team','Contact'].includes(tab)){
       nav(()=>{setPage({type:'section',section:tab});setActiveTab(tab);});
       return;
     }
@@ -391,6 +392,12 @@ export default function App() {
           </PageIn>
         )}
         {/* Main home page */}
+
+        {page?.type==='section' && page.section==='Contact' && (
+          <PageIn k="pg-contact">
+            <ContactPage onBack={onBackHome}/>
+          </PageIn>
+        )}
         {!page&&(
           <PageIn k="main">
             <HeroSection onTabChange={onTab} theme={theme}/>

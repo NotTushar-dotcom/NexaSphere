@@ -310,3 +310,35 @@
 /* ─── WIPE TRANSITION ─── */
 @keyframes wipeDown { from{transform:scaleY(0);transform-origin:top}    to{transform:scaleY(1);transform-origin:top} }
 @keyframes wipeUp   { from{transform:scaleY(1);transform-origin:bottom} to{transform:scaleY(0);transform-origin:bottom} }
+
+/* ── CONTACT NAV TAB — special accent ── */
+.contact-nav-tab {
+  background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(123,111,255,.08)) !important;
+  border: 1px solid rgba(0,212,255,.18) !important;
+  border-radius: 20px !important;
+  padding: 6px 14px !important;
+  color: var(--c1) !important;
+  transition: all .22s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.contact-nav-tab:hover, .contact-nav-tab.active {
+  background: linear-gradient(135deg, rgba(0,212,255,.18), rgba(123,111,255,.18)) !important;
+  border-color: var(--c1) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 0 16px var(--c1g) !important;
+}
+.contact-nav-tab::after { display: none !important; }
+
+[data-theme="light"] .contact-nav-tab {
+  background: linear-gradient(135deg, rgba(194,119,10,.08), rgba(109,40,217,.06)) !important;
+  border-color: rgba(194,119,10,.25) !important;
+  color: #c2770a !important;
+}
+[data-theme="light"] .contact-nav-tab:hover {
+  background: linear-gradient(135deg, rgba(194,119,10,.14), rgba(109,40,217,.1)) !important;
+  border-color: #c2770a !important;
+  box-shadow: 0 0 14px rgba(194,119,10,.3) !important;
+}
+
+/* Mobile contact tab */
+.contact-tab { color: var(--c1) !important; font-weight: 800 !important; }
+[data-theme="light"] .contact-tab { color: #c2770a !important; }
