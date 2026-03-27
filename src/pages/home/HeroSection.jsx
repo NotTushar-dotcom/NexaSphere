@@ -177,7 +177,7 @@ export default function HeroSection({ onTabChange, theme = 'dark' }) {
       <div className="hero-overlay"/>
       <Atmosphere isLight={isLight}/>
 
-      <div className="hero-content" style={{position:'relative',zIndex:2}}>
+      <div className="hero-content" style={{position:'relative',zIndex:2,paddingBottom:'80px'}}>
         <Logo3D ready={ready} isLight={isLight}/>
         <HeroTitle isLight={isLight}/>
 
@@ -217,9 +217,9 @@ export default function HeroSection({ onTabChange, theme = 'dark' }) {
 
       {/* Bottom fade */}
       <div style={{position:'absolute',bottom:0,left:0,right:0,height:'150px',background:'linear-gradient(to bottom,transparent,var(--bg))',pointerEvents:'none',zIndex:2}}/>
-      {/* Scroll indicator */}
-      <div style={{position:'absolute',bottom:'22px',left:'50%',transform:'translateX(-50%)',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',gap:'4px',opacity:.38,animation:'float 2.5s ease-in-out infinite'}}>
-        <div style={{fontSize:'.56rem',color:isLight?'#78716c':'var(--t3)',letterSpacing:'.22em',fontFamily:"'Space Mono',monospace"}}>SCROLL</div>
+      {/* Scroll indicator — sits inside bottom fade */}
+      <div style={{position:'absolute',bottom:'16px',left:'50%',transform:'translateX(-50%)',zIndex:2,display:'flex',flexDirection:'column',alignItems:'center',gap:'4px',opacity:.42,animation:'float 2.5s ease-in-out infinite'}}>
+        <div style={{fontSize:'.56rem',color:isLight?'#78716c':'var(--t2)',letterSpacing:'.22em',fontFamily:"'Space Mono',monospace"}}>SCROLL</div>
         <div style={{width:'1px',height:'28px',background:`linear-gradient(to bottom,var(--c1),transparent)`}}/>
       </div>
     </section>
