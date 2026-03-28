@@ -155,6 +155,8 @@ button, a { touch-action: manipulation; }
   color:var(--c1); font-size:1.2rem;
   display:flex; align-items:center; justify-content:center;
   cursor:pointer; z-index:9000;
+  isolation: isolate;
+  pointer-events: all !important;
   touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   box-shadow: var(--sh1), 0 0 22px var(--c1g);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s !important;
@@ -214,6 +216,11 @@ button, a { touch-action: manipulation; }
 .ag:nth-child(10) { animation-delay:-4.9s; }
 .ag:nth-child(11) { animation-delay:-1.6s; }
 .ag:nth-child(12) { animation-delay:-3.8s; }
+
+/* ── On touch devices: disable orbit particles (they extend outside hit area) ── */
+@media (hover: none) {
+  #theme-toggle::before, #theme-toggle::after { display: none; }
+}
 
 @media (max-width:768px) {
   .section { padding: 68px 0; }
