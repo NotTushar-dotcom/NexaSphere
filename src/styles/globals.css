@@ -86,6 +86,10 @@ body { cursor: none;
   font-size: 16px; line-height: 1.65;
   overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
+/* ── Touch devices: restore cursor so tap events are NOT suppressed ── */
+@media (hover: none) {
+  body, button, a { cursor: auto !important; }
+}
 [data-theme="light"] body { background: #faf8f5; }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -99,6 +103,8 @@ p { line-height: 1.78; }
 a { color: var(--c1); text-decoration: none; cursor: none; }
 img, svg { display: block; max-width: 100%; }
 button { cursor: none; font-family: 'Rajdhani', sans-serif; border: none; background: none; }
+/* touch-action on interactive buttons so tap is never eaten by scroll detection */
+button, a { touch-action: manipulation; }
 
 .container { width:100%; max-width:1240px; margin:0 auto; padding:0 28px; }
 .section { padding: 100px 0; }
@@ -148,7 +154,8 @@ button { cursor: none; font-family: 'Rajdhani', sans-serif; border: none; backgr
   background:var(--card); border:1.5px solid var(--bdr2);
   color:var(--c1); font-size:1.2rem;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; z-index:800;
+  cursor:pointer; z-index:9000;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   box-shadow: var(--sh1), 0 0 22px var(--c1g);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s !important;
 }
