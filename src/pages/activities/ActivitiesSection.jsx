@@ -20,10 +20,17 @@ function ActivityCard({ a, idx, onNav }) {
 
   return (
     <div ref={ref}
-      className="activity-card shimmer tilt pop-flip"
-      style={{cursor:'pointer',perspective:'800px'}}
-      onMouseMove={onMove} onMouseLeave={onLeave} onClick={click}
+      className={`activity-card shimmer tilt pop-flip ag`}
+      style={{
+        cursor:'pointer',
+        perspective:'800px',
+        animationDelay: `${[-0, -2.1, -4.2, -1.0, -3.3, -5.5, -0.7, -6.1][idx % 8]}s`,
+      }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      onClick={click}
     >
+      <div className="card-accent-line"/>
       <div className="card-num">{String(idx+1).padStart(2,'0')}</div>
       <div className="activity-icon">{a.icon}</div>
       <div className="activity-title">{a.title}</div>

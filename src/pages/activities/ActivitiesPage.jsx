@@ -20,6 +20,12 @@ const activityDetails = {
     highlights: ['Pitching rounds', 'Expert panel judging', 'Market research focus', 'Cross-discipline teams'],
     skills: ['Creative Thinking', 'Presentation', 'Research', 'Product Design'],
   },
+  'Promptathon': {
+    color: '#8b5cf6',
+    longDesc: 'The art of talking to AI turned into a competitive sport. Craft the sharpest, most creative prompts to solve real-world problems, generate stunning outputs, and outsmart your peers in the age of generative intelligence.',
+    highlights: ['Multi-round prompt battles', 'Judged on creativity & accuracy', 'Real-world AI tasks', 'Leaderboard & prizes'],
+    skills: ['Prompt Engineering', 'AI Tools', 'Creative Thinking', 'Problem Solving'],
+  },
   'Workshop': {
     color: '#ff9500',
     longDesc: 'Hands-on learning sessions on cutting-edge tools, frameworks, and emerging technologies. Led by experienced peers, alumni, or industry guests — every workshop gets you building something real by the end.',

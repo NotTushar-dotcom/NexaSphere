@@ -106,14 +106,6 @@ function IntroContent({ phase, count, tagline, accent, accent2, muted, grad, bg,
         GL Bajaj Group of Institutions · Mathura
       </div>
       <div style={{
-        position:'absolute', bottom:16,
-        fontFamily:"'Space Mono',monospace", fontSize:'.48rem',
-        letterSpacing:'.2em', textTransform:'uppercase', color:muted,
-        opacity:tagline?.45:0, transition:'opacity .5s .35s',
-      }}>
-        POWERED BY REACT + VITE
-      </div>
-      <div style={{
         position:'absolute', bottom:0, left:0, right:0, height:'2px',
         background:`linear-gradient(90deg,${accent},${accent2})`,
         transformOrigin:'left', animation:'cinProg 2.4s ease-out forwards',
