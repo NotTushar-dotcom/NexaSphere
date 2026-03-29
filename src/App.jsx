@@ -86,9 +86,9 @@ function Cursor() {
     };
 
     const tick = () => {
-      // Smooth follow
-      s.ox += (s.mx - s.ox) * 0.11;
-      s.oy += (s.my - s.oy) * 0.11;
+      // Smooth follow — increased sensitivity (was 0.11)
+      s.ox += (s.mx - s.ox) * 0.18;
+      s.oy += (s.my - s.oy) * 0.18;
 
       // Anti-gravity float: continuous gentle bob
       s.floatPhase += 0.022;
@@ -408,11 +408,14 @@ export default function App() {
         />
       )}
 
-      {/* Theme toggle */}
       <button id="theme-toggle" className="mag-btn"
         onClick={triggerStorm}
         aria-label="Toggle theme" title={`Switch to ${theme==='dark'?'light':'dark'} mode`}>
-        {theme==='dark'?'☀️':'🌙'}
+        <span className="toggle-track">
+          <span className="toggle-icon sun">☀️</span>
+          <span className="toggle-thumb" />
+          <span className="toggle-icon moon">🌙</span>
+        </span>
       </button>
 
       {cinDone&&<ParticleBackground theme={theme}/>}

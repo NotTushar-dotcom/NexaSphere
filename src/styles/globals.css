@@ -147,37 +147,71 @@ button, a { touch-action: manipulation; }
   transition: none !important;
 }
 
-/* ── THEME TOGGLE ── */
+/* ── THEME TOGGLE — pill switch ── */
 #theme-toggle {
-  position:fixed; bottom:28px; left:28px;
-  width:48px; height:48px; border-radius:50%;
-  background:var(--card); border:1.5px solid var(--bdr2);
-  color:var(--c1); font-size:1.2rem;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; z-index:9000;
+  position: fixed; bottom: 28px; left: 28px;
+  width: 72px; height: 36px; border-radius: 18px;
+  background: linear-gradient(135deg, #0b1425 0%, #0f1c35 100%);
+  border: 1.5px solid var(--bdr2);
+  display: flex; align-items: center;
+  padding: 0 6px;
+  gap: 4px;
+  cursor: pointer; z-index: 9000;
   isolation: isolate;
   pointer-events: all !important;
   touch-action: manipulation; -webkit-tap-highlight-color: transparent;
-  box-shadow: var(--sh1), 0 0 22px var(--c1g);
-  transition: transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s !important;
+  box-shadow: var(--sh1), 0 0 18px var(--c1g), inset 0 0 12px rgba(0,212,255,0.06);
+  transition: box-shadow .3s ease, border-color .3s ease, background .4s ease !important;
+  overflow: hidden;
+}
+[data-theme="light"] #theme-toggle {
+  background: linear-gradient(135deg, #e8dfd0 0%, #f3ede6 100%);
+  box-shadow: 0 2px 16px rgba(0,0,0,.10), 0 0 12px rgba(194,119,10,.18), inset 0 0 10px rgba(194,119,10,0.06);
+  border-color: rgba(194,119,10,0.28);
 }
 #theme-toggle:hover {
-  transform: rotate(25deg) scale(1.18) !important;
-  box-shadow: 0 0 36px var(--c1g), 0 0 70px rgba(123,111,255,.25) !important;
+  box-shadow: 0 0 28px var(--c1g), 0 0 60px rgba(123,111,255,.2), inset 0 0 16px rgba(0,212,255,.09) !important;
   border-color: var(--c1) !important;
 }
-/* Orbit particles around toggle */
+/* Track glow bar */
 #theme-toggle::before {
-  content:'';
-  position:absolute; width:6px; height:6px; border-radius:50%;
-  background:var(--c1); opacity:.8;
-  animation: toggleOrbit 2.2s linear infinite;
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(0,212,255,.08) 0%, rgba(123,111,255,.05) 100%);
+  pointer-events: none;
 }
-#theme-toggle::after {
-  content:'';
-  position:absolute; width:4px; height:4px; border-radius:50%;
-  background:var(--c2); opacity:.55;
-  animation: toggleOrbitReverse 3.1s linear infinite;
+/* No ::after orbit particle */
+#theme-toggle::after { display: none; }
+
+/* Switch icons & thumb — injected via JSX */
+.toggle-track {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; position: relative; height: 100%; padding: 0 2px;
+}
+.toggle-icon {
+  font-size: .82rem; line-height: 1; z-index: 1; user-select: none;
+  transition: opacity .3s ease;
+}
+.toggle-icon.sun  { opacity: 1; }
+.toggle-icon.moon { opacity: .45; }
+[data-theme="light"] .toggle-icon.sun  { opacity: .45; }
+[data-theme="light"] .toggle-icon.moon { opacity: 1; }
+
+.toggle-thumb {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  left: 4px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0%, var(--c1) 45%, var(--c2) 100%);
+  box-shadow: 0 0 8px var(--c1), 0 0 18px rgba(0,212,255,.45);
+  transition: left .35s cubic-bezier(.34,1.56,.64,1), background .4s ease, box-shadow .3s ease !important;
+  z-index: 2;
+}
+[data-theme="light"] .toggle-thumb {
+  left: calc(100% - 30px);
+  background: radial-gradient(circle at 35% 35%, #fff 0%, #f59e0b 45%, var(--c2) 100%);
+  box-shadow: 0 0 8px #f59e0b, 0 0 18px rgba(245,158,11,.45);
 }
 #theme-toggle.storm-spinning {
   animation: spin 0.4s linear infinite !important;
