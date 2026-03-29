@@ -188,16 +188,13 @@ button, a { touch-action: manipulation; }
 .toggle-track {
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; position: relative; height: 100%; padding: 0 2px;
+  pointer-events: none;
 }
 .toggle-icon {
   font-size: .82rem; line-height: 1; z-index: 1; user-select: none;
+  pointer-events: none;
   transition: opacity .3s ease;
 }
-.toggle-icon.sun  { opacity: 1; }
-.toggle-icon.moon { opacity: .45; }
-[data-theme="light"] .toggle-icon.sun  { opacity: .45; }
-[data-theme="light"] .toggle-icon.moon { opacity: 1; }
-
 .toggle-thumb {
   position: absolute;
   top: 50%; transform: translateY(-50%);
@@ -205,9 +202,15 @@ button, a { touch-action: manipulation; }
   width: 26px; height: 26px; border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #fff 0%, var(--c1) 45%, var(--c2) 100%);
   box-shadow: 0 0 8px var(--c1), 0 0 18px rgba(0,212,255,.45);
+  pointer-events: none;
   transition: left .35s cubic-bezier(.34,1.56,.64,1), background .4s ease, box-shadow .3s ease !important;
   z-index: 2;
 }
+.toggle-icon.sun  { opacity: 1; }
+.toggle-icon.moon { opacity: .45; }
+[data-theme="light"] .toggle-icon.sun  { opacity: .45; }
+[data-theme="light"] .toggle-icon.moon { opacity: 1; }
+
 [data-theme="light"] .toggle-thumb {
   left: calc(100% - 30px);
   background: radial-gradient(circle at 35% 35%, #fff 0%, #f59e0b 45%, var(--c2) 100%);

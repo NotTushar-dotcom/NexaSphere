@@ -76,10 +76,16 @@ function spawnGrain(W, H, idx) {
 }
 
 export default function StormOverlay({ toTheme, onMidpoint, onDone }) {
-  const canvasRef   = useRef(null);
-  const midRef      = useRef(false);
-  const doneRef     = useRef(false);
-  const startTimeRef = useRef(null); // stable across re-renders
+  const canvasRef    = useRef(null);
+  const midRef       = useRef(false);
+  const doneRef      = useRef(false);
+  const startTimeRef = useRef(null);
+  // Keep callbacks in refs so the animation loop always calls the latest version
+  const onMidpointRef = useRef(onMidpoint);
+  const onDoneRef     = useRef(onDone);
+  useEffect(() => { onMidpointRef.current = onMidpoint; }, [onMidpoint]);
+  useEffect(() => { onDoneRef.current     = onDone;     }, [onDone]);
+
   const themeColors = {
     dark:  { bg:'#020509', r:2,   g:5,   b:9,   c1:[0,212,255],  c2:[123,111,255], c3:[189,92,255] },
     light: { bg:'#faf8f5', r:250, g:248, b:245, c1:[194,119,10], c2:[109,40,217],  c3:[190,24,93]  },
@@ -126,7 +132,7 @@ export default function StormOverlay({ toTheme, onMidpoint, onDone }) {
         elapsed < T.done        ? 'settle'      : 'done';
 
       if (ph === 'done') {
-        if (!doneRef.current) { doneRef.current = true; onDone(); }
+        if (!doneRef.current) { doneRef.current = true; onDoneRef.current(); }
         cancelAnimationFrame(raf);
         return;
       }
@@ -134,7 +140,7 @@ export default function StormOverlay({ toTheme, onMidpoint, onDone }) {
       /* ── Fire theme switch mid-storm ── */
       if (elapsed >= 620 && !midRef.current) {
         midRef.current = true;
-        onMidpoint();
+        onMidpointRef.current();
       }
 
       /* ═══════════════════════════════════════
@@ -403,7 +409,7 @@ export default function StormOverlay({ toTheme, onMidpoint, onDone }) {
       style={{
         position: 'fixed', inset: 0,
         width: '100%', height: '100%',
-        zIndex: 9500, pointerEvents: 'all',
+        zIndex: 9500, pointerEvents: 'none',
       }}
     />
   );
