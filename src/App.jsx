@@ -14,7 +14,6 @@ import Footer              from './shared/Footer';
 import ActivityDetailPage  from './pages/activities/ActivityDetailPage';
 import EventDetailPage     from './pages/events/EventDetailPage';
 import CinematicOpening    from './shared/CinematicOpening';
-import StormOverlay        from './shared/StormOverlay';
 import ActivitiesPage      from './pages/activities/ActivitiesPage';
 import EventsPage          from './pages/events/EventsPage';
 import AboutPage           from './pages/about/AboutPage';
@@ -185,67 +184,16 @@ export default function App() {
   const [wipePh,   setWipePh]   = useState('out');
   const [page,     setPage]     = useState(null);
   const [theme,    setTheme]    = useState(()=>localStorage.getItem('ns-theme')||'dark');
-  const [stormOn,  setStormOn]  = useState(false);
-  const [stormTo,  setStormTo]  = useState('light');
-  const stormLock = useRef(false);
-  const themeRef  = useRef(theme); // always-current theme ref to avoid stale closures
-  useEffect(() => { themeRef.current = theme; }, [theme]);
-
   // Apply theme to html element
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme);
     localStorage.setItem('ns-theme',theme);
   },[theme]);
 
-  // Storm theme toggle — uses ref so never stale
-  const triggerStorm = useCallback(() => {
-    if (stormLock.current) return;
-    stormLock.current = true;
-    const nextTheme = themeRef.current === 'dark' ? 'light' : 'dark';
-    setStormTo(nextTheme);
-    setStormOn(true);
-    const btn = document.getElementById('theme-toggle');
-    if (btn) btn.classList.add('storm-spinning');
-    // Safety fallback — unlock after 3s if onDone never fires
-    setTimeout(() => {
-      if (stormLock.current) {
-        stormLock.current = false;
-        setStormOn(false);
-        const b = document.getElementById('theme-toggle');
-        if (b) b.classList.remove('storm-spinning');
-      }
-    }, 3000);
+  // Simple theme toggle — no animation, just CSS transition
+  const toggleTheme = useCallback(() => {
+    setTheme(t => t === 'dark' ? 'light' : 'dark');
   }, []);
-
-  const onStormMidpoint = useCallback(() => {
-    // Flip theme at storm peak using ref — never stale
-    const nextTheme = themeRef.current === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-  }, []);
-
-  const onStormDone = useCallback(() => {
-    setStormOn(false);
-    stormLock.current = false;
-    const btn = document.getElementById('theme-toggle');
-    if (btn) btn.classList.remove('storm-spinning');
-  }, []);
-
-  // Scroll progress bar
-  useEffect(()=>{
-    const bar=document.getElementById('scroll-progress');
-    if(!bar)return;
-    let ticking=false;
-    const fn=()=>{
-      if(!ticking){requestAnimationFrame(()=>{
-        const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
-        bar.style.width=d>0?`${(s/d)*100}%`:'0%';
-        ticking=false;
-      });ticking=true;}
-    };
-    window.addEventListener('scroll',fn,{passive:true});
-    return()=>window.removeEventListener('scroll',fn);
-  },[]);
-
   // Back to top button
   useEffect(()=>{
     const btn=document.getElementById('back-to-top');
@@ -399,22 +347,15 @@ export default function App() {
       <Cursor/>
       <Wipe on={wipeOn} ph={wipePh}/>
 
-      {/* Storm cinematic overlay */}
-      {stormOn && (
-        <StormOverlay
-          toTheme={stormTo}
-          onMidpoint={onStormMidpoint}
-          onDone={onStormDone}
-        />
-      )}
 
-      <button id="theme-toggle" className="mag-btn"
-        onClick={triggerStorm}
-        aria-label="Toggle theme" title={`Switch to ${theme==='dark'?'light':'dark'} mode`}>
-        <span className="toggle-track">
-          <span className="toggle-icon sun">☀️</span>
-          <span className="toggle-thumb" />
-          <span className="toggle-icon moon">🌙</span>
+      {/* Theme toggle — simple pill, no animation */}
+      <button id="theme-toggle" onClick={toggleTheme}
+        aria-label="Toggle theme"
+        title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+        <span className="tgl-track">
+          <span className="tgl-icon sun">☀️</span>
+          <span className="tgl-icon moon">🌙</span>
+          <span className="tgl-thumb"/>
         </span>
       </button>
 
